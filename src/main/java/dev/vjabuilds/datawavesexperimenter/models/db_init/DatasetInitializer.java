@@ -11,6 +11,7 @@ import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import dev.vjabuilds.datawavesexperimenter.models.Dataset;
 
 @Configuration
+@Order(2)
 public class DatasetInitializer{
     @Bean
     @ConditionalOnProperty(
