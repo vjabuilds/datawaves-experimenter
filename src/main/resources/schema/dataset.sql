@@ -9,9 +9,3 @@ CREATE TABLE IF NOT EXISTS public.dataset (
     "deleted" timestamp NULL,
 	CONSTRAINT dataset_pkey PRIMARY KEY (dataset_id)
 );
-
--- private Long dataset_id;
---     private String name;
---     private String source;
---     private String description;
---     private String type;
