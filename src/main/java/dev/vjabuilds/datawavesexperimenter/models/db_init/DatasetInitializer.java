@@ -25,20 +25,28 @@ public class DatasetInitializer{
 
         return (args) -> 
         {
+            repo.saveAll(
             repo.saveAll(List.of(
-                new Dataset(null,"Dataset 1",
-                             "https://kaggle.com", 
-                             "A public dataset from kaggle", 
-                             "structured"),
-                new Dataset(null,"Dataset 2",
-                             "https://google.com", 
-                             "A public dataset from google", 
-                             "image"),
-                new Dataset(null,"Dataset 3",
-                             "https://amazon.com", 
-                             "A public dataset from amazon", 
-                             "time_series")
-            )).subscribe();
+                    new Dataset(null,"Dataset 1",
+                                "https://kaggle.com", 
+                                "A public dataset from kaggle", 
+                                "structured", null, null),
+                    new Dataset(null,"Dataset 2",
+                                "https://google.com", 
+                                "A public dataset from google", 
+                                "image", null, null),
+                    new Dataset(null,"Dataset 3",
+                                "https://amazon.com", 
+                                "A public dataset from amazon", 
+                                "time_series", null, null)
+                )).takeLast(1).map(arg->new Dataset(null, 
+                                    "Derived Dataset", 
+                                    "https://kaggle.com", 
+                                    "A dataset derived from a public dataset", 
+                                    "structured", 
+                                    arg.getDataset_id(), 
+                                    null))
+            ).subscribe();
         };
     }    
 }

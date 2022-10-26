@@ -18,4 +18,6 @@ public class Dataset extends BaseModel {
     private String source;
     private String description;
     private String type; // can be structured, text, time_series or image
+    private Long parent_dataset_id;
+    private Long parent_pipeline_id;
 }
