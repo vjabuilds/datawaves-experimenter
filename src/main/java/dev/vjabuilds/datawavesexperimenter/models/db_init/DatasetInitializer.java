@@ -44,7 +44,7 @@ public class DatasetInitializer{
                                     "https://kaggle.com", 
                                     "A dataset derived from a public dataset", 
                                     "structured", 
-                                    arg.getDataset_id(), 
+                                    arg.getDatasetId(), 
                                     null))
             ).subscribe();
         };

@@ -16,8 +16,8 @@ public class DatasetFetchingService {
 
     private Mono<Dataset> getParentDataset(Dataset ds)
     {
-        if(ds.getParent_dataset_id() != null)
-            return datasetRepository.findById(ds.getParent_dataset_id());
+        if(ds.getParentDatasetId() != null)
+            return datasetRepository.findById(ds.getParentDatasetId());
         else
             return Mono.empty();
     }
@@ -25,5 +25,10 @@ public class DatasetFetchingService {
     public Flux<Dataset> getDatasetWithParents(long Id)
     {
         return datasetRepository.findById(Id).expand(this::getParentDataset);
+    }
+    
+    public Flux<Dataset> getOriginalDatasets()
+    {
+        return datasetRepository.findByParentDatasetId(null);
     }
 }

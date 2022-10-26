@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper=true)
 public class Dataset extends BaseModel {
     @Id
-    private Long dataset_id;
+    private Long datasetId;
     private String name;
     private String source;
     private String description;
     private String type; // can be structured, text, time_series or image
-    private Long parent_dataset_id;
-    private Long parent_pipeline_id;
+    private Long parentDatasetId;
+    private Long parentPipelineId;
 }

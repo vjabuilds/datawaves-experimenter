@@ -29,4 +29,9 @@ public class DatasetController {
         return dfs.getDatasetWithParents(dataset_id);
     }
 
+    @GetMapping("/datasets/original")
+    Flux<Dataset> getDatasetWithParents()
+    {
+        return dfs.getOriginalDatasets();
+    }
 }

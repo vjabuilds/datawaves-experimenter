@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper=true)
 public class Pipeline extends BaseModel{
     @Id
-    private Long pipeline_id;
+    private Long pipelineId;
     private String name;
     private String description;
 }
