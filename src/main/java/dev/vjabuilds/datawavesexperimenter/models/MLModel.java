@@ -2,7 +2,7 @@ package dev.vjabuilds.datawavesexperimenter.models;
 
 import java.util.List;
 
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,10 +12,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper=false)
 public class MLModel extends BaseModel {
     @Id
     private Long mlModelId;
+
     private String name;
     private String description;
     private String version;
