@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper=true)
 public class MLModel extends BaseModel {
     @Id
-    private Long mlmodelId;
+    private Long mlModelId;
     private String name;
     private String description;
     private String version;
