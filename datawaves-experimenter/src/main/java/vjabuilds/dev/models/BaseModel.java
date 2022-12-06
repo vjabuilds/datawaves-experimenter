@@ -2,15 +2,18 @@ package vjabuilds.dev.models;
 
 import java.time.ZonedDateTime;
 
+import javax.persistence.MappedSuperclass;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
+@MappedSuperclass
 public abstract class BaseModel {
-    private ZonedDateTime created;
-    private ZonedDateTime updated;
-    private ZonedDateTime deleted;
+    protected ZonedDateTime created;
+    protected ZonedDateTime updated;
+    protected ZonedDateTime deleted;
 
     public BaseModel()
     {
