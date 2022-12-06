@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import vjabuilds.dev.value_objects.DatasetType;
 
 @Entity
 @Data
@@ -19,7 +20,7 @@ public class Dataset extends BaseModel {
     private String name;
     private String source;
     private String description;
-    private String type;
+    private DatasetType type;
     private Long parentDatasetId;
     private Long parentPipelineId;
 }
