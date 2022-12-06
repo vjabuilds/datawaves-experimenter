@@ -6,13 +6,15 @@ import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Dataset {
+@EqualsAndHashCode(callSuper = true)
+public class Dataset extends BaseModel {
     @Id @GeneratedValue private Long datasetId;
     private String name;
     private String source;
