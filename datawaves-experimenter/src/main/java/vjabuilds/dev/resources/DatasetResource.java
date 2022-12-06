@@ -32,7 +32,6 @@ public class DatasetResource {
     @POST
     public Uni<Response> createDataset(Dataset ds) 
     {
-        System.out.println(ds);
         return Panache.withTransaction(() -> {
             return datasetRepo.persist(ds).map(x -> Response.status(Status.CREATED).entity(x).build());
         });
