@@ -16,6 +16,6 @@ public abstract class BaseModel {
     {
         created = ZonedDateTime.now();
         updated = ZonedDateTime.now();
-        deleted = ZonedDateTime.now();
+        deleted = null;
     }
 }
