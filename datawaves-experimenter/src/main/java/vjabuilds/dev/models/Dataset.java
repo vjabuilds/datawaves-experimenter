@@ -1,8 +1,12 @@
 package vjabuilds.dev.models;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +25,10 @@ public class Dataset extends BaseModel {
     private String source;
     private String description;
     private DatasetType type;
-    private Long parentDatasetId;
-    private Long parentPipelineId;
+    @ManyToOne
+    private Dataset parentDataset;
+    @ManyToOne
+    private Pipeline parentPipeline;
+    @OneToMany
+    private List<Dataset> childrenDatasets;
 }
