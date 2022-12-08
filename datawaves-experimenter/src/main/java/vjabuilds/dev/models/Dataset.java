@@ -25,10 +25,12 @@ public class Dataset extends BaseModel {
     private String source;
     private String description;
     private DatasetType type;
+
     @ManyToOne
     private Dataset parentDataset;
     @ManyToOne
     private Pipeline parentPipeline;
+
     @OneToMany
     private List<Dataset> childrenDatasets;
 }

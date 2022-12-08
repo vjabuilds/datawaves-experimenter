@@ -2,6 +2,7 @@ package vjabuilds.dev.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,6 +24,6 @@ public class Pipeline extends BaseModel {
     private String name;
     private String version;
     private String yamlFormat;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Dataset> childDatasets;
 }
