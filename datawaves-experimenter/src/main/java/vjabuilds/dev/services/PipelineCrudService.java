@@ -13,6 +13,7 @@ import io.smallrye.mutiny.Uni;
 import lombok.AllArgsConstructor;
 import vjabuilds.dev.models.Pipeline;
 import vjabuilds.dev.repos.PipelineRepo;
+import vjabuilds.dev.services.dataset_crud_models.DatasetListModel;
 import vjabuilds.dev.services.pipeline_crud_models.PipelineCreateModel;
 import vjabuilds.dev.services.pipeline_crud_models.PipelineDetailsModel;
 import vjabuilds.dev.services.pipeline_crud_models.PipelineListModel;
@@ -26,12 +27,7 @@ public class PipelineCrudService {
     {
         return repo.listAll().map(x -> 
                     x.stream()
-                    .map(p -> new PipelineListModel(
-                                              p.getPipelineId(),
-                                              p.getName(), 
-                                              p.getVersion(), 
-                                              p.getDescription(), 
-                                              p.getYamlFormat()))
+                    .map(p -> new PipelineListModel(p))
                     .collect(Collectors.toList()));
     }
 
@@ -45,7 +41,7 @@ public class PipelineCrudService {
                     x.getName(), 
                     x.getVersion(),
                     x.getYamlFormat(),
-                    ds != null ? ds.stream().map(d -> d.getDatasetId()).collect(Collectors.toList()) 
+                    ds != null ? ds.stream().map(d -> new DatasetListModel(d)).collect(Collectors.toList()) 
                                : List.of()
                     )
             ));

@@ -39,29 +39,13 @@ public class DatasetCrudService {
         Uni<List<DatasetListModel>> children = original.chain(x -> Mutiny.fetch(x.getChildrenDatasets()))
             .onItem().ifNotNull().transform(x -> 
                 x.stream().map(t -> {
-                    return new DatasetListModel(
-                        t.getDatasetId(), 
-                        t.getName(), 
-                        t.getSource(), 
-                        t.getDescription(), 
-                        t.getType());
+                    return new DatasetListModel(t);
             }).toList());
+            
         Uni<DatasetListModel> parentDs = original.chain(x -> Mutiny.fetch(x.getParentDataset()))
-            .onItem().ifNotNull().transform(x -> new DatasetListModel(
-                x.getDatasetId(), 
-                x.getName(),
-                x.getSource(),
-                x.getDescription(),
-                x.getType())
-            );
+            .onItem().ifNotNull().transform(x -> new DatasetListModel(x));
         Uni<PipelineListModel> parentPipeline = original.chain(x -> Mutiny.fetch(x.getParentPipeline()))
-            .onItem().ifNotNull().transform(x -> new PipelineListModel(
-                x.getPipelineId(), 
-                x.getName(), 
-                x.getVersion(), 
-                x.getDescription(), 
-                x.getYamlFormat()
-            ));
+            .onItem().ifNotNull().transform(x -> new PipelineListModel(x));
 
         return Uni.combine().all().unis(original, children, parentDs, parentPipeline)
             .asTuple().map(x -> new DatasetDetailsModel(
