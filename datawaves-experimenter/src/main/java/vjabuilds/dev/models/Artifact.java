@@ -1,33 +1,27 @@
 package vjabuilds.dev.models;
 
-import java.util.List;
-
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import vjabuilds.dev.value_objects.ArtifactType;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Experiment extends BaseModel {
-    @Id @GeneratedValue private Long datasetId;
+@EqualsAndHashCode(callSuper = true)
+public class Artifact extends BaseModel {
+    @Id @GeneratedValue private Long artifactId;
     private String name;
+    private String path;
     private String description;
-
-    @OneToMany
-    private MLModel model;
-    @OneToMany
-    private Dataset dataset;
+    private ArtifactType type;
     @ManyToOne
-    private List<Artifact> artifacts;
+    private Experiment experiment;
 }
