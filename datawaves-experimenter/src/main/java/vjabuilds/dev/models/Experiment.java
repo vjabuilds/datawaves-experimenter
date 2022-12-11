@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -20,14 +21,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Experiment extends BaseModel {
-    @Id @GeneratedValue private Long datasetId;
+    @Id @GeneratedValue private Long experimentId;
     private String name;
     private String description;
 
     @ManyToOne
+    @JoinColumn(name = "mlModelId")
     private MLModel model;
     @ManyToOne
+    @JoinColumn(name = "datasetId")
     private Dataset dataset;
-    @OneToMany
+    @OneToMany(mappedBy = "experiment")
     private List<Artifact> artifacts;
 }

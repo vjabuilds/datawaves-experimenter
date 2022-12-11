@@ -3,6 +3,7 @@ package vjabuilds.dev.models;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Deployment extends BaseModel {
-    @Id @GeneratedValue private Long datasetId;
+    @Id @GeneratedValue private Long deploymentId;
     private String name;
     private String URL;
     private Boolean REST;
@@ -26,7 +27,9 @@ public class Deployment extends BaseModel {
 
 
     @ManyToOne
+    @JoinColumn(name = "artifactId")
     private Artifact weights;
     @ManyToOne
+    @JoinColumn(name = "modelId")
     private MLModel model;
 }

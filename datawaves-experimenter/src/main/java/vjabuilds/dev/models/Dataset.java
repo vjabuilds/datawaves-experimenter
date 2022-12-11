@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -27,10 +28,12 @@ public class Dataset extends BaseModel {
     private DatasetType type;
 
     @ManyToOne
+    @JoinColumn(name="parentDatasetId")
     private Dataset parentDataset;
     @ManyToOne
+    @JoinColumn(name="parentPipelineId")
     private Pipeline parentPipeline;
 
-    @OneToMany
+    @OneToMany(mappedBy = "parentDataset")
     private List<Dataset> childrenDatasets;
 }
