@@ -1,7 +1,9 @@
 package vjabuilds.dev.services.pipeline_crud_models;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import vjabuilds.dev.models.Pipeline;
 
+@RegisterForReflection
 public record PipelineListModel(
     Long id,
     String name, 
