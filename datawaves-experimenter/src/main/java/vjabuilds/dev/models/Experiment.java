@@ -24,10 +24,10 @@ public class Experiment extends BaseModel {
     private String name;
     private String description;
 
-    @OneToMany
-    private MLModel model;
-    @OneToMany
-    private Dataset dataset;
     @ManyToOne
+    private MLModel model;
+    @ManyToOne
+    private Dataset dataset;
+    @OneToMany
     private List<Artifact> artifacts;
 }
