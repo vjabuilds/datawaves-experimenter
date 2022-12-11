@@ -19,18 +19,32 @@ import io.smallrye.mutiny.Uni;
 import lombok.AllArgsConstructor;
 import vjabuilds.dev.models.Dataset;
 import vjabuilds.dev.repos.DatasetRepo;
+import vjabuilds.dev.services.DatasetCrudService;
 
 @Path("/datasets")
 @AllArgsConstructor
 public class DatasetResource {
 
     @Inject DatasetRepo datasetRepo;
+    @Inject DatasetCrudService datasetService;
 
     @GET
     @RolesAllowed({"admin"})
-    public Uni<List<Dataset>> getDatasets()
+    public Uni<Response> getDatasets()
     {
-        return datasetRepo.findAll().list();
+        return datasetService.getDatasets().map(x -> 
+            Response.ok(x).build());
+    }
+
+    @GET
+    @Path("/{id}")
+    @RolesAllowed({"admin"})
+    public Uni<Response> getDatasetDetails(@RestPath Long id)
+    {
+        return datasetService.getDatasetDetails(id)
+            .onItem().ifNotNull().transform(x -> Response.ok(x).build())
+            .onItem().ifNull().continueWith(() -> Response.status(404).build());
+
     }
 
     @POST

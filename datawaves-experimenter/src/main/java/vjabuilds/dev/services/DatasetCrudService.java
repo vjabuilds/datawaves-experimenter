@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import org.hibernate.reactive.mutiny.Mutiny;
 
+import io.quarkus.hibernate.reactive.panache.Panache;
 import io.smallrye.mutiny.Uni;
 import lombok.AllArgsConstructor;
 import vjabuilds.dev.repos.DatasetRepo;
@@ -35,29 +36,37 @@ public class DatasetCrudService {
 
     public Uni<DatasetDetailsModel> getDatasetDetails(Long id)
     {
-        var original = repo.findById(id);
-        Uni<List<DatasetListModel>> children = original.chain(x -> Mutiny.fetch(x.getChildrenDatasets()))
-            .onItem().ifNotNull().transform(x -> 
-                x.stream().map(t -> {
-                    return new DatasetListModel(t);
-            }).toList());
-            
-        Uni<DatasetListModel> parentDs = original.chain(x -> Mutiny.fetch(x.getParentDataset()))
-            .onItem().ifNotNull().transform(x -> new DatasetListModel(x));
-        Uni<PipelineListModel> parentPipeline = original.chain(x -> Mutiny.fetch(x.getParentPipeline()))
-            .onItem().ifNotNull().transform(x -> new PipelineListModel(x));
+        return Panache.withTransaction(() -> {
+            var original = repo.findById(id);
+            Uni<List<DatasetListModel>> children = original.onItem().ifNotNull()
+                .transformToUni(x -> Mutiny.fetch(x.getChildrenDatasets()))
+                .onItem().ifNotNull().transform(x -> 
+                    x.stream().map(t -> {
+                        return new DatasetListModel(t);
+                }).toList());
+                
+            Uni<DatasetListModel> parentDs = original.onItem().ifNotNull()
+            .transformToUni(x -> Mutiny.fetch(x.getParentDataset()))
+                .onItem().ifNotNull().transform(x -> new DatasetListModel(x));
+            Uni<PipelineListModel> parentPipeline = original.onItem().ifNotNull()
+            .transformToUni(x -> Mutiny.fetch(x.getParentPipeline()))
+                .onItem().ifNotNull().transform(x -> new PipelineListModel(x));
 
-        return Uni.combine().all().unis(original, children, parentDs, parentPipeline)
-            .asTuple().map(x -> new DatasetDetailsModel(
-                    x.getItem1().getDatasetId(), 
-                    x.getItem1().getName(),
-                    x.getItem1().getSource(),
-                    x.getItem1().getDescription(),
-                    x.getItem1().getType(),  
-                    x.getItem3(),
-                    x.getItem4(),
-                    x.getItem2()
-               )
-            );
+            return Uni.combine().all().unis(original, children, parentDs, parentPipeline)
+                .asTuple().map(x -> {
+                    if(x.getItem1() == null)
+                        return null;
+                    return new DatasetDetailsModel(
+                        x.getItem1().getDatasetId(), 
+                        x.getItem1().getName(),
+                        x.getItem1().getSource(),
+                        x.getItem1().getDescription(),
+                        x.getItem1().getType(),  
+                        x.getItem3(),
+                        x.getItem4(),
+                        x.getItem2());
+                }
+                );
+        });
     }
 }
