@@ -19,7 +19,7 @@ import vjabuilds.dev.value_objects.DatasetType;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 public class Dataset extends BaseModel {
     @Id @GeneratedValue private Long datasetId;
     private String name;

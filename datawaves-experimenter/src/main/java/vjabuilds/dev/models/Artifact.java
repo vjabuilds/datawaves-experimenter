@@ -16,7 +16,7 @@ import vjabuilds.dev.value_objects.ArtifactType;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 public class Artifact extends BaseModel {
     @Id @GeneratedValue private Long artifactId;
     private String name;

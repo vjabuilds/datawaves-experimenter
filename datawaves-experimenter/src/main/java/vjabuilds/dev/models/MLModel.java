@@ -13,7 +13,7 @@ import vjabuilds.dev.value_objects.TaskType;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
 public class MLModel extends BaseModel {
