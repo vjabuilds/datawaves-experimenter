@@ -1,5 +1,6 @@
 package vjabuilds.dev.services;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,7 +12,9 @@ import org.hibernate.reactive.mutiny.Mutiny;
 import io.quarkus.hibernate.reactive.panache.Panache;
 import io.smallrye.mutiny.Uni;
 import lombok.AllArgsConstructor;
+import vjabuilds.dev.models.Dataset;
 import vjabuilds.dev.repos.DatasetRepo;
+import vjabuilds.dev.services.dataset_crud_models.DatasetCreateModel;
 import vjabuilds.dev.services.dataset_crud_models.DatasetDetailsModel;
 import vjabuilds.dev.services.dataset_crud_models.DatasetListModel;
 import vjabuilds.dev.services.pipeline_crud_models.PipelineListModel;
@@ -68,5 +71,24 @@ public class DatasetCrudService {
                 }
                 );
         });
+    }
+
+    public Uni<DatasetDetailsModel> createDataset(DatasetCreateModel model)
+    {
+        return Panache.withTransaction(() -> repo.persist(new Dataset(null, 
+            model.name(), 
+            model.source(), 
+            model.description(), 
+            model.type(), 
+            null, 
+            null, 
+            null))).flatMap(x -> getDatasetDetails(x.getDatasetId()));
+    }
+
+    public Uni<Dataset> deleteDataset(Long id)
+    {
+        return Panache.withTransaction(() -> 
+            repo.findById(id).onItem().ifNotNull().invoke(x -> x.setDeleted(ZonedDateTime.now()))
+        );
     }
 }
