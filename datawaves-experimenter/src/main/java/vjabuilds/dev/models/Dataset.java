@@ -36,4 +36,6 @@ public class Dataset extends BaseModel {
 
     @OneToMany(mappedBy = "parentDataset")
     private List<Dataset> childrenDatasets;
+    @OneToMany(mappedBy = "dataset")
+    private List<Experiment> experiments;
 }

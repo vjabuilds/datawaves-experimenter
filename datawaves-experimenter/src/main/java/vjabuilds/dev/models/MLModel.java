@@ -1,8 +1,11 @@
 package vjabuilds.dev.models;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,4 +26,7 @@ public class MLModel extends BaseModel {
     private String name;
     private String description;
     private String yamlFormat;
+
+    @OneToMany(mappedBy = "model")
+    private List<Experiment> experiments;
 }
