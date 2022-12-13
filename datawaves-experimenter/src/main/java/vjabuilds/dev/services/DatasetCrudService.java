@@ -75,14 +75,17 @@ public class DatasetCrudService {
 
     public Uni<DatasetDetailsModel> createDataset(DatasetCreateModel model)
     {
-        return Panache.withTransaction(() -> repo.persist(new Dataset(null, 
-            model.name(), 
-            model.source(), 
-            model.description(), 
-            model.type(), 
-            null, 
-            null, 
-            null))).flatMap(x -> getDatasetDetails(x.getDatasetId()));
+        return Panache.withTransaction(() -> repo.persist(new Dataset(
+            null,
+            model.name(),
+            model.source(),
+            model.description(),
+            model.type(),
+            null,
+            null,
+            null,
+            null
+        ))).flatMap(x -> getDatasetDetails(x.getDatasetId()));
     }
 
     public Uni<Dataset> deleteDataset(Long id)

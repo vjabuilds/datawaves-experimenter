@@ -62,6 +62,7 @@ public class PipelineCrudServiceTest {
             DatasetType.STRUCTURED,
             null,
             null,
+            null,
             null
         );
 
@@ -75,6 +76,7 @@ public class PipelineCrudServiceTest {
                 DatasetType.STRUCTURED,
                 parent,
                 p,
+                null,
                 null
             ));
         p.setChildDatasets(datasets);
