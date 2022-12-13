@@ -21,7 +21,7 @@ import vjabuilds.dev.services.mlmodel_crud_models.MLModelListModel;
 public class MLModelCrudService {
     @Inject MLModelRepo repo;
 
-    public Uni<List<MLModelListModel>> getDatasets()
+    public Uni<List<MLModelListModel>> getMLModels()
     {
         return repo.listAll().map(x -> 
                     x.stream()
@@ -29,7 +29,7 @@ public class MLModelCrudService {
                     .collect(Collectors.toList()));
     }
 
-    public Uni<MLModelDetailsModel> getDatasetDetails(Long id)
+    public Uni<MLModelDetailsModel> getMLModelDetails(Long id)
     {
         return Panache.withTransaction(() -> {
             var original = repo.findById(id);
@@ -49,7 +49,7 @@ public class MLModelCrudService {
         });
     }
 
-    public Uni<MLModelDetailsModel> createDataset(MLModelCreateModel model)
+    public Uni<MLModelDetailsModel> createMLModel(MLModelCreateModel model)
     {
         return Panache.withTransaction(() -> repo.persist(new MLModel(
             null, 
@@ -59,10 +59,10 @@ public class MLModelCrudService {
             model.description(), 
             model.yamlFormat(), 
             null
-        ))).flatMap(x -> getDatasetDetails(x.getMlModelId()));
+        ))).flatMap(x -> getMLModelDetails(x.getMlModelId()));
     }
 
-    public Uni<MLModel> deleteDataset(Long id)
+    public Uni<MLModel> deleteMLModel(Long id)
     {
         return Panache.withTransaction(() -> 
             repo.findById(id).onItem().ifNotNull().invoke(x -> x.setDeleted(ZonedDateTime.now()))
