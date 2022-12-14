@@ -12,6 +12,7 @@ import org.jboss.resteasy.reactive.RestPath;
 import io.smallrye.mutiny.Uni;
 import lombok.AllArgsConstructor;
 import vjabuilds.dev.services.ExperimentCrudService;
+import vjabuilds.dev.services.experiment_crud_models.ArtifactCreateModel;
 import vjabuilds.dev.services.experiment_crud_models.ExperimentCreateModel;
 
 @Path("/experiments")
@@ -51,5 +52,14 @@ public class ExperimentResource {
         return experimentService.deleteExperiment(id)
             .onItem().ifNotNull().transform(x -> Response.ok().build())
             .onItem().ifNull().continueWith(() -> Response.status(404).build());
+    }
+
+    @POST
+    @Path("/artifacts")
+    public Uni<Response> addArtifact(ArtifactCreateModel model)
+    {
+        return experimentService.createArtifact(model)
+            .onItem().ifNotNull().transform(x -> Response.ok(x).build())
+            .onItem().ifNull().continueWith(Response.status(400).build());
     }
 }
