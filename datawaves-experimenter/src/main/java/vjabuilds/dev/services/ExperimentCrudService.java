@@ -4,6 +4,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import io.quarkus.hibernate.reactive.panache.Panache;
@@ -17,6 +18,7 @@ import vjabuilds.dev.services.experiment_crud_models.ExperimentDetailsModel;
 import vjabuilds.dev.services.experiment_crud_models.ExperimentListModel;
 import vjabuilds.dev.services.mlmodel_crud_models.MLModelDetailsModel;
 
+@ApplicationScoped
 public class ExperimentCrudService {
     @Inject DatasetCrudService datasetService;
     @Inject MLModelCrudService modelService;
