@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ public class Pipeline extends BaseModel {
     private String description;
     private String name;
     private String version;
+    @Lob
     private String yamlFormat;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "parentPipeline")
     private List<Dataset> childDatasets;
