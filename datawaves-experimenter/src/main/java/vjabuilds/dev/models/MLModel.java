@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
@@ -25,6 +26,7 @@ public class MLModel extends BaseModel {
     private DatasetType datasetType;
     private String name;
     private String description;
+    @Lob
     private String yamlFormat;
 
     @OneToMany(mappedBy = "model")
